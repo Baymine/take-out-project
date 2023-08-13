@@ -39,6 +39,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
     /**
      * 通过knife4j生成接口文档
+     * http://localhost:8080/doc.html#
      * @return
      */
     @Bean
@@ -51,14 +52,14 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.sky.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.sky.controller"))  // 指定扫描的包
                 .paths(PathSelectors.any())
                 .build();
         return docket;
     }
 
     /**
-     * 设置静态资源映射
+     * 设置静态资源映射（否则SpringMVC会认为请求的是一个Controller从而报错）
      * @param registry
      */
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
