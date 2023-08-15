@@ -78,12 +78,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         employee.setStatus(StatusConstant.ENABLE);
         employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
+        // 使用自定义注解填充公共字段
+//        employee.setCreateTime(LocalDateTime.now());
+//        employee.setUpdateTime(LocalDateTime.now());
 
         // 当前登陆的用户的id
-        employee.setCreateUser(BaseContext.getCurrentId());  // 在拦截器的位置存入
-        employee.setUpdateUser(BaseContext.getCurrentId());
+//        employee.setCreateUser(BaseContext.getCurrentId());  // 在拦截器的位置存入
+//        employee.setUpdateUser(BaseContext.getCurrentId());
 
         employeeMapper.save(employee);
     }
@@ -112,7 +113,12 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     @Override
     public void startOrStop(Integer status, Long id) {
-        Employee employee = Employee.builder().status(status).id(id).build();  // 使用Build注解，也可以使用set方法
+        Employee employee = Employee.builder()
+                .status(status)
+                .id(id)
+//                .updateTime(LocalDateTime.now())  // 使用注解自动填充
+//                .updateUser(BaseContext.getCurrentId())
+                .build();  // 使用Build注解，也可以使用set方法
 
         employeeMapper.update(employee);
     }
@@ -129,8 +135,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDTO, employee);
 
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+//        employee.setUpdateTime(LocalDateTime.now());
+//        employee.setUpdateUser(BaseContext.getCurrentId());
 
         employeeMapper.update(employee);
     }
