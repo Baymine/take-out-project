@@ -102,4 +102,18 @@ public class EmployeeController {
         return Result.success(pageResult);  // 封装到data中
     }
 
+    /**
+     * 启用或禁用用户
+     * @param status
+     * @param id
+     * @return
+     */
+    @PostMapping("status/{status}")
+    @ApiOperation("启用或禁用用户")
+    public Result startOrStop(@PathVariable Integer status, Long id) {
+        log.info("修改员工id:{}, 状态:{}", id, status);
+        employeeService.startOrStop(status, id);
+        return Result.success();
+    }
+
 }

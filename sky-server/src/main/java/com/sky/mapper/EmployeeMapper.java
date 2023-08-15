@@ -11,6 +11,13 @@ import org.apache.ibatis.annotations.Select;
 public interface EmployeeMapper {
 
     /**
+     * 更新员工信息
+     * @param employee
+     */
+    static void update(Employee employee) {
+    }
+
+    /**
      * 根据用户名查询员工
      * @param username
      * @return
