@@ -14,8 +14,7 @@ public interface EmployeeMapper {
      * 更新员工信息
      * @param employee
      */
-    static void update(Employee employee) {
-    }
+    void update(Employee employee);
 
     /**
      * 根据用户名查询员工
@@ -35,5 +34,18 @@ public interface EmployeeMapper {
             "#{updateTime}, #{createUser}, #{updateUser}, #{status})")
     void save(Employee employee);
 
+    /**
+     * 分页查询
+     * @param employeePageQueryDTO
+     * @return
+     */
     Page<Employee> pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
+
+    /**
+     * 根据Id获取用户信息
+     * @param id
+     * @return
+     */
+    @Select("select * from employee where id = #{id}")
+    Employee getById(Long id);
 }
