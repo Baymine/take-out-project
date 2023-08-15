@@ -48,6 +48,7 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
             Claims claims = JwtUtil.parseJWT(jwtProperties.getAdminSecretKey(), token);
             Long empId = Long.valueOf(claims.get(JwtClaimsConstant.EMP_ID).toString());
             log.info("当前员工id：", empId);
+            // 经过验证，每一次请求都是在一个线程当中完成的
             BaseContext.setCurrentId(empId);  // 为了给service传递当前操作用户的id
             //3、通过，放行
             return true;
