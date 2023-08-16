@@ -8,8 +8,8 @@ sky:
     password: 2017014176
   alioss:
     endpoint: oss-cn-beijing.aliyuncs.com
-    access-key-id: LTAI5tRabAUwxRqjWPDnXYmQ
-    access-key-secret: py6mOcEs2vdj4tqtixBuRu4t7EPozZ
+    access-key-id: *
+    access-key-secret: *
     bucket-name: take-out-project-assets
 
 
