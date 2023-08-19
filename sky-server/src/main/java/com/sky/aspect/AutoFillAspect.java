@@ -24,6 +24,8 @@ import java.time.LocalDateTime;
 @Slf4j
 public class AutoFillAspect {
     // TODO: 弄清楚这里的实现原理
+    // TODO: 实现支持list类型的填充
+    // TODO: 需要排查一下，似乎并不能正常工作？
     @Pointcut("execution(* com.sky.mapper.*.*(..)) && @annotation(com.sky.annotation.AutoFill)")
     public void autoFillPointCut(){}
 

@@ -123,6 +123,7 @@ public class DishServiceImpl implements DishService {
      * @param dishDTO
      */
     @Override
+    @Transactional
     public void updateWithFlavor(DishDTO dishDTO) {
 
         Dish dish = new Dish();
