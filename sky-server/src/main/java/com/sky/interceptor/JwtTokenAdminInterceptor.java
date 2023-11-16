@@ -29,7 +29,7 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
      * @param request
      * @param response
      * @param handler
-     * @return
+     * @return 指示请求是否继续进行下去
      * @throws Exception
      */
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -45,7 +45,7 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
         //2、校验令牌
         try {
             log.info("jwt校验:{}", token);
-            Claims claims = JwtUtil.parseJWT(jwtProperties.getAdminSecretKey(), token);
+            Claims claims = JwtUtil.parseJWT(jwtProperties.getAdminSecretKey(), token);  // 如果有效，返回一个claim对象
             Long empId = Long.valueOf(claims.get(JwtClaimsConstant.EMP_ID).toString());
             log.info("当前员工id：", empId);
             // 经过验证，每一次请求都是在一个线程当中完成的

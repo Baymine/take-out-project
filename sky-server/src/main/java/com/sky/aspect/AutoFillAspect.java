@@ -54,12 +54,16 @@ public class AutoFillAspect {
         LocalDateTime now = LocalDateTime.now();
         Long currentId = BaseContext.getCurrentId();
 
-        if (operationType == operationType.INSERT) {
+        if (operationType == OperationType.INSERT) {
             try {
-                Method setCreateTime = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_CREATE_TIME, LocalDateTime.class);
-                Method setCreateUser = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_CREATE_USER, Long.class);
-                Method setUpdateTime = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_TIME, LocalDateTime.class);
-                Method setUpdateUser = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_USER, Long.class);
+                Method setCreateTime = entity.getClass().getDeclaredMethod(
+                        AutoFillConstant.SET_CREATE_TIME, LocalDateTime.class);
+                Method setCreateUser = entity.getClass().getDeclaredMethod(
+                        AutoFillConstant.SET_CREATE_USER, Long.class);
+                Method setUpdateTime = entity.getClass().getDeclaredMethod(
+                        AutoFillConstant.SET_UPDATE_TIME, LocalDateTime.class);
+                Method setUpdateUser = entity.getClass().getDeclaredMethod(
+                        AutoFillConstant.SET_UPDATE_USER, Long.class);
 
                 setCreateTime.invoke(entity, now);
                 setCreateUser.invoke(entity, currentId);
@@ -68,14 +72,16 @@ public class AutoFillAspect {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-        } else if (operationType == operationType.UPDATE) {
+        } else if (operationType == OperationType.UPDATE) {
             try {
-            Method setUpdateTime = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_TIME, LocalDateTime.class);
-            Method setUpdateUser = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_USER, Long.class);
+                Method setUpdateTime = entity.getClass().getDeclaredMethod(
+                        AutoFillConstant.SET_UPDATE_TIME, LocalDateTime.class);
+                Method setUpdateUser = entity.getClass().getDeclaredMethod(
+                        AutoFillConstant.SET_UPDATE_USER, Long.class);
 
-            // 通过反射为对象属性赋值
-            setUpdateTime.invoke(entity, now);
-            setUpdateUser.invoke(entity, currentId);
+                // 通过反射为对象属性赋值
+                setUpdateTime.invoke(entity, now);
+                setUpdateUser.invoke(entity, currentId);
             } catch(Exception e){
                 throw new RuntimeException(e);
             }

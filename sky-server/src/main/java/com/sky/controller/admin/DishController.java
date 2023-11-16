@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -102,5 +103,19 @@ public class DishController {
 
         List<Dish> dishList = dishService.list(categoryId);
         return Result.success(dishList);
+    }
+
+    /**
+     * 设置菜品起售或者停售
+     * @param status
+     * @param id
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("菜品起售停售")
+    public Result<String>startOrStop(Long id, @PathVariable("status") Integer status){
+        log.info(id + status.toString());
+        dishService.startOrStop(status, id);
+        return Result.success();
     }
 }
