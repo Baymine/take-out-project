@@ -195,4 +195,27 @@ public class DishServiceImpl implements DishService {
         // TODO: 起售，将所有包含该菜品的套餐且套餐内所有的菜品没有停售
     }
 
+    /**
+     * 条件查询菜品和口味
+     * @param dish
+     * @return
+     */
+    @Override
+    public List<DishVO> listWithFlavor(Dish dish) {
+        // 将两组数据进行分别查询然后将数据分别复制到数据类当中即可
+        List<Dish> dishList = dishMapper.list(dish);
+        ArrayList<DishVO> dishVOList = new ArrayList<>();
+
+        for (Dish d : dishList){
+            DishVO dishVO = new DishVO();
+            BeanUtils.copyProperties(d, dishVO);
+
+            List<DishFlavor> flavors = dishFlavorMapper.getByDishId(d.getId());
+            dishVO.setFlavors(flavors);
+            dishVOList.add(dishVO);
+        }
+
+        return dishVOList;
+    }
+
 }
