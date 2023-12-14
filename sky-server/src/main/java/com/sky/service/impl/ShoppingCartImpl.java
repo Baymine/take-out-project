@@ -1,6 +1,7 @@
 package com.sky.service.impl;
 
 import com.sky.context.BaseContext;
+import com.sky.dto.DishDTO;
 import com.sky.dto.ShoppingCartDTO;
 import com.sky.entity.Dish;
 import com.sky.entity.Setmeal;
@@ -46,7 +47,7 @@ public class ShoppingCartImpl implements ShoppingCartService {
         if (list != null && list.size() > 0){
             ShoppingCart cart = list.get(0);
             cart.setNumber(cart.getNumber() + 1);
-            shoppingCartMapper.updateNumberById(shoppingCart);
+            shoppingCartMapper.updateNumberById(cart);
         }
         else {
             // 如果不存在，则需要插入一个购物车数据
@@ -79,7 +80,41 @@ public class ShoppingCartImpl implements ShoppingCartService {
         Long userId = BaseContext.getCurrentId();
         ShoppingCart shoppingCart = ShoppingCart.builder()
                 .userId(userId).build();
-
+        log.info("查看购物车列表, 当前用户id为:{}", userId);
         return shoppingCartMapper.list(shoppingCart);
+    }
+
+    /**
+     * 清空购物车数据
+     */
+    @Override
+    public void deleteShoppingCart() {
+        Long userId = BaseContext.getCurrentId();
+        shoppingCartMapper.deleteByUserId(userId);
+    }
+
+    /**
+     *  减少购物车当中的商品数量
+     * @param dishDTO
+     */
+    @Override
+    public void subShoppingCart(DishDTO dishDTO) {
+        ShoppingCart shoppingCart = new ShoppingCart();
+        BeanUtils.copyProperties(dishDTO, shoppingCart);
+
+        Long userId = BaseContext.getCurrentId();
+        shoppingCart.setUserId(userId);
+        List<ShoppingCart> list = shoppingCartMapper.list(shoppingCart);
+
+        if (list != null && list.size() > 0){
+            ShoppingCart cart = list.get(0);
+            if (cart.getNumber() == 1){
+                shoppingCartMapper.deleteByDish(cart);
+            } else {
+                cart.setNumber(cart.getNumber() - 1);
+                shoppingCartMapper.updateNumberById(cart);
+            }
+
+        }
     }
 }
