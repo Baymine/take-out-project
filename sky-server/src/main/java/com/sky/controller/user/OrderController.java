@@ -48,19 +48,6 @@ public class OrderController {
         return Result.success(orderPaymentVO);
     }
 
-    /**
-     * TODO: 明确需要完成什么
-     * @param id
-     * @return
-     */
-    @GetMapping("/reminder")
-    @ApiOperation("订单提醒")
-    public Result reminder(@PathVariable Long id) {
-        log.info("订单提醒：{}", id);
-        orderService.reminder(id);
-        return Result.success();
-    }
-
 
 
     /**
@@ -125,6 +112,13 @@ public class OrderController {
     @ApiOperation("再来一单")
     public Result repetition(@PathVariable Long id) {
         orderService.repetition(id);
+        return Result.success();
+    }
+
+    @GetMapping("/reminder/{id}")
+    @ApiOperation("订单提醒")
+    public Result reminder(@PathVariable Long id){
+        orderService.reminder(id);
         return Result.success();
     }
 }

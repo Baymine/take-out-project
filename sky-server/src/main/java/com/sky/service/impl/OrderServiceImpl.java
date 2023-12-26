@@ -204,7 +204,19 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public void reminder(Long id) {
+        Orders ordersDB = orderMapper.getById(id);
 
+        // 检查订单是否存在
+        if (ordersDB == null || ordersDB.getStatus().equals(Orders.DELIVERY_IN_PROGRESS)){
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+        }
+
+        HashMap map = new HashMap();
+        map.put("type", 2);
+        map.put("orderId", id);
+        map.put("content", "订单号： " + ordersDB.getNumber());
+        // 通过websocket推送消息
+        webSocketServer.sendToAllClient(JSON.toJSONString(map));
     }
 
     /**
