@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Select;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface OrderMapper {
@@ -82,4 +83,6 @@ public interface OrderMapper {
      * @return
      */
     List<GoodsSalesDTO> getSalesTop(LocalDateTime begin, LocalDateTime end);
+
+    Integer countByMap(Map map);
 }
