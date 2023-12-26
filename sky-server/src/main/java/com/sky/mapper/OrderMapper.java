@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 
 @Mapper
@@ -66,4 +67,11 @@ public interface OrderMapper {
      */
     @Select("select count(id) from orders where status = #{toBeConfirmed}")
     Integer countStatus(Integer toBeConfirmed);
+
+    /**
+     *  通过动态条件查询订单总额
+     * @return
+     */
+
+    Double sumByMap(HashMap map);
 }
